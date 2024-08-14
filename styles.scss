@@ -49,26 +49,27 @@ body {
   height: 90%;
   display: flex;
   flex-direction: column;
-  padding: 1rem;
+  // padding: 1rem;
   padding-left: 1rem;
-  margin-right: 5rem;
+  margin-right: 2rem;
   justify-content: center;
   align-items: center;
 }
 
-.intro-container {
-}
+// .intro-container {
+// }
 
 .intro h1 {
-  font-size: 42px;
-  margin-bottom: 0.5rem;
+  font-size: 3rem;
+  margin-bottom: 1.5rem;
   color: #fff;
   // text-align: center;
   width: 80%;
+  font-weight: bold;
 }
 
 .intro p {
-  color: var(--neutral-grayish-blue);
+  color: white;
   font-weight: 50px;
   padding-bottom: 2rem;
   // padding-left: 6rem;
@@ -84,14 +85,35 @@ body {
 
 .form-group {
   margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  position: relative;
 }
 
 .form-group input {
   width: 100%;
-  padding: 0.8rem; /* Adjusted padding for mobile */
+  padding: 1rem;
   border: 1px solid var(--neutral-grayish-blue);
   border-radius: 5px;
   font-size: var(--font-size);
+  font-weight: bold;
+}
+
+.form-group input::placeholder {
+  padding-left: 1rem;
+}
+
+.error-msg {
+  display: flex;
+  justify-content: end;
+}
+
+.error-icon {
+  display: flex;
+  position: absolute;
+  padding-top: 1rem;
+  padding-right: 1rem;
+  right: 0;
 }
 
 .button-1,
@@ -125,8 +147,9 @@ p {
 }
 
 a {
-  color: var(--accent-blue);
+  color: var(--primary-red);
   text-decoration: none;
+  font-weight: bold;
 }
 
 a:hover {
@@ -137,7 +160,6 @@ a:hover {
   body {
     flex-direction: column;
   }
-
   .container-1 {
     padding-right: 1rem;
     padding-left: 1rem;
@@ -157,7 +179,8 @@ a:hover {
   }
 
   .intro-container {
-    // padding-left: 2rem;
+    // width: fit-content;
+    height: 14rem;
     align-items: center;
   }
 
@@ -165,18 +188,20 @@ a:hover {
     font-size: 28px;
     margin-bottom: 0.5rem;
     text-align: center;
-    width: 90%;
+    width: 100%;
   }
 
   .intro p {
+    max-width: 800px;
     font-size: 0.9rem;
     margin-bottom: 1rem;
     padding-left: 0;
     text-align: center;
+    width: 85%;
   }
 
   .form-group input {
-    padding: 0.6rem;
+    padding: 1rem;
     font-size: 14px;
   }
 
@@ -187,5 +212,13 @@ a:hover {
 
   p {
     font-size: 0.8rem;
+  }
+}
+@media (max-width: 480px) {
+  body {
+    background-image: url(./images/bg-intro-mobile.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    overflow: hidden;
   }
 }

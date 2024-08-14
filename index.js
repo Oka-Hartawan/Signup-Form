@@ -1,64 +1,121 @@
-const form = document.querySelector(".sign-up-form");
-const firstName = document.getElementById("first-name");
-const lastName = document.getElementById("last-name");
-const email = document.getElementById("email");
-const password = document.getElementById("password");
+const signUpForm = document.forms["sign-up-form"];
+const firstName = signUpForm["first-name"];
+const lastName = signUpForm["last-name"];
+const email = signUpForm["email"];
+const password = signUpForm["password"];
 
-form.addEventListener("submit", (e) => {
-  e.preventDefault();
+const errorMesageFN = document.getElementById("error-mesage-fn");
+const errorMesageLN = document.getElementById("error-mesage-ln");
+const errorMesageEm = document.getElementById("error-mesage-em");
+const errorMesagePW = document.getElementById("error-mesage-pw");
 
-  checkInputs();
-});
+const imgfnAlert = document.getElementById("imgfnalert");
+const imglnAlert = document.getElementById("imglnalert");
+const imgEmailAlert = document.getElementById("imgemailalert");
+const imgPasswordAlert = document.getElementById("imgpasswordalert");
 
-function checkInputs() {
-  // Get the values from the inputs
-  const firstNameValue = firstName.value.trim();
-  const lastNameValue = lastName.value.trim();
-  const emailValue = email.value.trim();
-  const passwordValue = password.value.trim();
+const symbols = /[!@#$%^&*()_+{}\[\]:;"'<>,.?/~`1234567890]/;
+const symbolsEmail = /[!#$%^&*()_+{}\[\]:;"'<>,?/~`]/;
+const emails = "@gmail.com";
+const string = ["undefined", "number", "boolean", "string", "null", "object"];
 
-  if (firstNameValue === "") {
-    setErrorFor(firstName, "First Name cannot be empty");
+function validation() {
+  if (firstName.value.trim() === "") {
+    imgfnAlert.classList.remove("d-none");
+    errorMesageFN.classList.add("text-danger");
+    errorMesageFN.classList.remove("d-none");
+    errorMesageFN.innerHTML = "First Name cannot be empty";
+  } else if (symbols.test(firstName.value)) {
+    imgfnAlert.classList.remove("d-none");
+    errorMesageFN.classList.add("text-danger");
+    errorMesageFN.classList.remove("d-none");
+    errorMesageFN.innerHTML = "do not use specials characters!";
+  } else if (firstName.value.length < 3) {
+    errorMesageFN.classList.add("text-danger");
+    errorMesageFN.classList.remove("d-none");
+    errorMesageFN.innerHTML = "First Name to short!";
+    imgfnAlert.classList.remove("d-none");
+  } else if (string.includes(firstName.value.toLowerCase())) {
+    fnAlert.innerHTML = `${firstName.value} is not avalable`;
   } else {
-    setSuccessFor(firstName);
+    errorMesageFN.classList.add("text-success");
+    errorMesageFN.classList.remove("text-danger");
+    errorMesageFN.innerHTML = "success";
+    errorMesageFN.classList.remove("d-none");
+    imgfnAlert.classList.add("d-none");
   }
 
-  if (lastNameValue === "") {
-    setErrorFor(lastName, "Last Name cannot be empty");
+  if (lastName.value.trim() === "") {
+    errorMesageLN.innerHTML = "Last Name cannot be empty";
+    errorMesageLN.classList.add("text-danger");
+    errorMesageLN.classList.remove("d-none");
+    imglnAlert.classList.remove("d-none");
+  } else if (symbols.test(lastName.value)) {
+    errorMesageLN.innerHTML = "do not use specials characters!";
+    errorMesageLN.classList.add("text-danger");
+    errorMesageLN.classList.remove("d-none");
+    imglnAlert.classList.remove("d-none");
+  } else if (string.includes(lastName.value.toLowerCase())) {
+    lnAlert.innerHTML = `${lastName.value} is not avalable`;
+  } else if (lastName.value.length < 3) {
+    errorMesageLN.innerHTML = "Last Name to short!";
+    errorMesageLN.classList.add("text-danger");
+    errorMesageLN.classList.remove("d-none");
+    imglnAlert.classList.remove("d-none");
   } else {
-    setSuccessFor(lastName);
+    errorMesageLN.classList.add("text-success");
+    errorMesageLN.classList.remove("text-danger");
+    errorMesageLN.classList.remove("d-none");
+    errorMesageLN.innerHTML = "success";
+    imglnAlert.classList.add("d-none");
   }
 
-  if (emailValue === "") {
-    setErrorFor(email, "Email cannot be empty");
-  } else if (!isEmail(emailValue)) {
-    setErrorFor(email, "Looks like this is not an email");
+  if (email.value.trim() === "") {
+    errorMesageEm.classList.add("text-danger");
+    errorMesageEm.classList.remove("d-none");
+    errorMesageEm.innerHTML = "Email cannot be empty";
+    imgEmailAlert.classList.remove("d-none");
+  } else if (
+    !email.value.includes("@") ||
+    !email.value.includes(".com") ||
+    symbolsEmail.test(email.value)
+  ) {
+    errorMesageEm.classList.add("text-danger");
+    errorMesageEm.classList.remove("d-none");
+    errorMesageEm.innerHTML = "Looks like this not an email";
+    imgEmailAlert.classList.remove("d-none");
   } else {
-    setSuccessFor(email);
+    errorMesageEm.classList.remove("text-danger");
+    errorMesageEm.classList.add("text-success");
+    errorMesageEm.classList.remove("d-none");
+    errorMesageEm.innerHTML = "success";
+    imgEmailAlert.classList.add("d-none");
   }
 
-  if (passwordValue === "") {
-    setErrorFor(password, "Password cannot be empty");
+  if (password.value.trim() === "") {
+    errorMesagePW.classList.add("text-danger");
+    errorMesagePW.classList.remove("d-none");
+    errorMesagePW.innerHTML = "password must be fill!";
+    imgPasswordAlert.classList.remove("d-none");
+  } else if (password.value.length < 6) {
+    errorMesagePW.classList.add("text-danger");
+    errorMesagePW.classList.remove("d-none");
+    errorMesagePW.innerHTML = "Password to short!";
+    imgPasswordAlert.classList.remove("d-none");
+  } else if (!symbolsEmail.test(password.value)) {
+    errorMesagePW.classList.add("text-danger");
+    errorMesagePW.classList.remove("d-none");
+    errorMesagePW.innerHTML = "password must have atleast 1 symbols";
+    imgPasswordAlert.classList.remove("d-none");
   } else {
-    setSuccessFor(password);
+    errorMesagePW.classList.add("text-success");
+    errorMesagePW.classList.remove("text-danger");
+    errorMesagePW.innerHTML = "success";
+    imgPasswordAlert.classList.add("d-none");
   }
 }
 
-function setErrorFor(input, message) {
-  const formGroup = input.parentElement;
-  const small = formGroup.querySelector("small");
-  small.innerText = message;
-  small.style.display = "block";
-  input.style.borderColor = "hsl(0, 100%, 74%)";
-}
-
-function setSuccessFor(input) {
-  const formGroup = input.parentElement;
-  const small = formGroup.querySelector("small");
-  small.style.display = "none";
-  input.style.borderColor = "hsl(154, 59%, 51%)";
-}
-
-function isEmail(email) {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-}
+signUpForm.onsubmit = (event) => {
+  event.preventDefault();
+  validation();
+};
